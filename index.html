@@ -12,18 +12,43 @@
         <div class="sidebar" id="sidebar">
             <h2>القائمة</h2>
            <ul>
-  <li><a href="#" data-content="الرئيسية">الرئيسية</a></li>
-  <li><a href="#" data-content="الملف الشخصي">الملف الشخصي</a></li>
-  <li><a href="#" data-content="الإعدادات">الإعدادات</a></li>
-  <li><a href="#" data-content="المساعدة">المساعدة</a></li>
-  <li><a href="#" data-content="تسجيل الخروج">تسجيل الخروج</a></li>
+    <li><a href="#" data-target="home">الرئيسية</a></li>
+    
+<li><a href="#" data-target="profile">الملف الشخصي</a></li>
+    
+<li><a href="#" data-target="settings">الإعدادات</a></li>
+    
+<li><a href="#" data-target="help">المساعدة</a></li>
+    
+<li><a href="#" data-target="logout">تسجيل الخروج</a></li>
 </ul>
         </div>
         <div class="main">
             <div class="topbar">
                 <button id="toggleSidebar">☰</button>
             </div>
-            <div class="content"></div>
+            <div class="content">
+ <div id="home" class="page active">
+      <h2>الرئيسية</h2>
+      <p>مرحبا بك في الصفحة الرئيسية.</p>
+    </div>
+    <div id="profile" class="page">
+      <h2>الملف الشخصي</h2>
+      <p>بياناتك الشخصية هنا.</p>
+    </div>
+    <div id="settings" class="page">
+      <h2>الإعدادات</h2>
+      <p>تغيير الإعدادات من هنا.</p>
+    </div>
+    <div id="help" class="page">
+      <h2>المساعدة</h2>
+      <p>معلومات المساعدة.</p>
+    </div>
+    <div id="logout" class="page">
+      <h2>تسجيل الخروج</h2>
+      <p>تم تسجيل الخروج.</p>
+    </div>
+</div>
         </div>
     </div>
     
