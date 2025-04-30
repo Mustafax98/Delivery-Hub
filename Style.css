@@ -1,0 +1,86 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+:root{
+    --white:#fff;
+    --oragne: ;
+    --green: ;
+}
+body{
+    background-color: var(--white);
+}
+
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* الأساسي */
+.sidebar {
+    width: 5%;
+    background-color: #333;
+    transition: all 0.3s ease;
+}
+
+.sidebar.hidden {
+    width: 0;
+    overflow: hidden;
+}
+
+.main {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.topbar {
+    height: 10vh;
+    background-color: #666;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+        z-index: 1050;
+        position: relative; /* علشان z-index يشتغل */
+}
+
+.topbar button {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 1100; /* أعلى من السايد بار */
+}
+
+/* الموبايل */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .main {
+        width: 100%;
+    }
+
+    .topbar {
+        height: 60px;
+    }
+}
