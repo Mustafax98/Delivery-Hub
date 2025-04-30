@@ -7,12 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       const targetId = this.getAttribute("data-target");
 
-      // اخفاء كل الصفحات
       pages.forEach(page => {
         page.classList.remove("active");
       });
 
-      // اظهار الصفحة المطلوبة
       const targetPage = document.getElementById(targetId);
       if (targetPage) {
         targetPage.classList.add("active");
