@@ -65,10 +65,12 @@ body{
 .sidebar ul {
     list-style: none;
     padding: 0;
+    margin-top: .5rem;
 }
 
 .sidebar ul li {
     padding: 1rem;
+    margin: 0 .5rem;
     background-color: var(--white);
     border-radius: .5rem;
     margin: 15px 0;
