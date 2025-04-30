@@ -62,11 +62,12 @@ body{
 }
 
   .page {
-      display: none;
-    }
-    .page.active {
-      display: block;
-    }
+    display: none;
+  }
+
+  .page.active {
+    display: block;
+  }
 /*-----------------*/
 
 .sidebar ul {
