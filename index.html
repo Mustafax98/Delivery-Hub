@@ -63,8 +63,8 @@
                         
                     <!-- Tabs Content -->
                     <div class="tab-content-container">
-                            <div class="tab-content" id="content1">
-                                <div class="filters">
+                        <div class="tab-content" id="content1">
+                            <div class="filters">
                                     <input type="date" />
                                     <input type="date" />
                                     <select>
@@ -87,9 +87,9 @@
                                         <option>Online</option>
                                         <option>Wallet</option>
                                     </select>
-                                </div>
-                                
-                                <div class="summary">
+                            </div>
+                            
+                            <div class="summary">
                                     <div class="card">
                                         <h3>Activity</h3>
                                         <p>82%</p>
@@ -110,18 +110,19 @@
                                         <h3>Revenue</h3>
                                         <p>132.000</p>
                                     </div>
+                            </div>
+                            
+                            <div class="table-wrapper">
+                                <div class="tablebar">
+                                    <input type="search" placeholder="Search...">
                                 </div>
-                                
-                                <div class="table-wrapper">
-                                    <div class="tablebar">
-                                        <input type="search" placeholder="search">
-                                    </div>
+                                <div class="table-container">
                                     <table>
                                         <thead>
                                             <tr>
                                                 <th>Ref</th>
                                                 <th>Date</th>
-                                                <th>ُEmployee</th>
+                                                <th>Employee</th>
                                                 <th>Customer</th>
                                                 <th>Total</th>
                                                 <th>Pay method</th>
@@ -291,27 +292,27 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
-                                <div class="kpi-card">
-                                    <div class="chart-area">
-                                        <canvas id="dualBarChart"></canvas>
-                                    </div>
-                                    
-                                    <div class="controls-area">
-                                        <select id="year-select" class="dropdown-select">
-                                            <option value="2024">2024</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2022">2022</option>
-                                        </select>
-                                        
-                                        <div class="buttons-group">
-                                            <button class="action-btn">المبيعات</button>
-                                            <button class="action-btn">المصروفات</button>
-                                            <button class="action-btn">الأرباح</button>
-                                        </div>
+                            </div>
+                            
+                            <div class="kpi-card">
+                                <div class="controls-area">
+                                    <select id="year-select" class="dropdown-select">
+                                        <option value="2025">2025</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                    </select>
+                                    <div class="buttons-group">
+                                        <button class="chart-btn">Income</button>
+                                        <button class="chart-btn">Expenses</button>
+                                        <button class="chart-btn">Profit</button>
                                     </div>
                                 </div>
+                                <div class="chart-area">
+                                    <canvas id="dualBarChart"></canvas>
+                                </div>
                             </div>
+                        </div>
                     </div>
 
                     <div class="tab-content" id="content2"></div>
@@ -331,7 +332,7 @@
                 <p>معلومات المساعدة.</p>
             </div>
 
-            <div id="settings" class="page">
+            <div id="settings" class="page ">
                 <div class="tabs">
                     <input type="radio" name="tabs" id="tab11">
                     <input type="radio" name="tabs" id="tab12">
@@ -352,10 +353,9 @@
                     
                     <!-- Tabs Content -->
                     <div class="tab-content-container">
-                        <div class="tab-content" id="content10">
+                        <div class="tab-content" id="content11">
                             profile
                         </div>
-                        <div class="tab-content" id="content11">Profile</div>
                         <div class="tab-content" id="content12">Empolyees</div>
                         <div class="tab-content" id="content12">Accounts</div>
                         <div class="tab-content" id="content14">Theme</div>
@@ -372,11 +372,8 @@
         </div>
     </div>
     
-    
     <script src="Script.js"></script>
-    <script src="Scriptmain.js"></script>
-    <script src="api.js"></script>
-
+    <script src="Chart.js"></script>
 
 </body>
 </html>
