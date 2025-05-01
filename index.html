@@ -1,379 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="Style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+  <meta charset="UTF-8">
+  <title>Product List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      padding: 20px;
+    }
 
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
 
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .header input {
+      padding: 8px 12px;
+      width: 200px;
+    }
+
+    .header button {
+      padding: 10px 20px;
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f1f5f9;
+    }
+
+    .status {
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .Inactive {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .Scheduled {
+      background-color: #fef9c3;
+      color: #a16207;
+    }
+
+    .Publish {
+      background-color: #d1fae5;
+      color: #047857;
+    }
+
+    .stock-toggle {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border-radius: 50%;
+      background-color: #d1d5db;
+    }
+
+    .stock-toggle.active {
+      background-color: #6366f1;
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .product-info img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 4px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .category-icon {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      border-radius: 50%;
+    }
+
+    .shoes { background: #a7f3d0; }
+    .electronics { background: #fecaca; }
+    .accessories { background: #e0e7ff; }
+  </style>
 </head>
 <body>
-    <div class="sidebar" id="sidebar">
-        <div class="links">
-            <a href="#" data-target="home">Home</a>
-            <a href="#" data-target="pos">POS</a>
-            <a href="#" data-target="crm">CRM</a>
-            <a href="#" data-target="logestics">Logestics</a>
-            <a href="#" data-target="suppliers">Suppliers</a>
-            <a href="#" data-target="help">Help</a>
-            <a href="#" data-target="settings">Settings</a>
-            <a href="#" data-target="logout">Logout</a>
-        </div>
-    </div>
 
-    <div class="main">  
-        <div class="topbar">
-            <button id="toggleSidebar">☰</button>
-        </div>
-        
-        <div class="content">
-            <div id="home" class="page">
-                <h2>الرئيسية</h2>
-                <p>مرحبا بك في الصفحة الرئيسية.</p>
-            </div>
-            
-            <div id="pos" class="page active">
-                <div class="tabs">
-                    <input type="radio" name="tabs" id="tab1" checked>
-                    <input type="radio" name="tabs" id="tab2">
-                    <input type="radio" name="tabs" id="tab3">
-                    <input type="radio" name="tabs" id="tab4">
-                    <input type="radio" name="tabs" id="tab5">
-                    <input type="radio" name="tabs" id="tab6">
-                    <input type="radio" name="tabs" id="tab7">
-                    <input type="radio" name="tabs" id="tab8">
-                    <input type="radio" name="tabs" id="tab9">
-                    
-                    <!-- Tabs Header -->
-                    <div class="tab-header">
-                        <label for="tab1">Dashboard</label>
-                        <label for="tab2">Sales/Checkout Page</label>
-                        <label for="tab3">Categories</label>
-                        <label for="tab4">Products</label>
-                        <label for="tab5">Qrcode</label>
-                        <label for="tab6">إدارة المخزون – التتبع والتنبيهات</label>
-                        <label for="tab7">إدارة العملاء</label>
-                        <label for="tab8">Suppliers</label>
-                        <label for="tab9">Invoices</label>
-                        <label for="tab10">Reports</label>
-                    </div>
-                        
-                    <!-- Tabs Content -->
-                    <div class="tab-content-container">
-                        <div class="tab-content" id="content1">
-                            <div class="filters">
-                                    <input type="date" />
-                                    <input type="date" />
-                                    <select>
-                                        <option>Branches</option>
-                                        <option>6 October</option>
-                                        <option>Obour</option>
-                                        <option>Nasr City</option>
-                                        <option>Heliopolis</option>
-                                    </select>
-                                    <select>
-                                        <option>ُEmployees</option>
-                                        <option>أحمد</option>
-                                        <option>منى</option>
-                                        <option>إسلام</option>
-                                        <option>أسماء</option>
-                                    </select>
-                                    <select>
-                                        <option>Pay Method</option>
-                                        <option>Cash</option>
-                                        <option>Online</option>
-                                        <option>Wallet</option>
-                                    </select>
-                            </div>
-                            
-                            <div class="summary">
-                                    <div class="card">
-                                        <h3>Activity</h3>
-                                        <p>82%</p>
-                                    </div>
-                                    <div class="card">
-                                        <h3>Invoices</h3>
-                                        <p>320</p>
-                                    </div>
-                                    <div class="card">
-                                        <h3>Sales</h3>
-                                        <p>125.000 جنيه</p>
-                                    </div>
-                                    <div class="card">
-                                        <h3>Online Payments</h3>
-                                        <p>7000</p>
-                                    </div>
-                                    <div class="card">
-                                        <h3>Revenue</h3>
-                                        <p>132.000</p>
-                                    </div>
-                            </div>
-                            
-                            <div class="table-wrapper">
-                                <div class="tablebar">
-                                    <input type="search" placeholder="Search...">
-                                </div>
-                                <div class="table-container">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Ref</th>
-                                                <th>Date</th>
-                                                <th>Employee</th>
-                                                <th>Customer</th>
-                                                <th>Total</th>
-                                                <th>Pay method</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1001</td>
-                                                <td>2025-04-29</td>
-                                                <td>منى</td>
-                                                <td>أحمد علي</td>
-                                                <td>850 جنيه</td>
-                                                <td>Cash</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1002</td>
-                                                <td>2025-04-29</td>
-                                                <td>أحمد</td>
-                                                <td>سارة حسن</td>
-                                                <td>450 جنيه</td>
-                                                <td>Online</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            <div class="kpi-card">
-                                <div class="controls-area">
-                                    <select id="year-select" class="dropdown-select">
-                                        <option value="2025">2025</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
-                                    </select>
-                                    <div class="buttons-group">
-                                        <button class="chart-btn">Income</button>
-                                        <button class="chart-btn">Expenses</button>
-                                        <button class="chart-btn">Profit</button>
-                                    </div>
-                                </div>
-                                <div class="chart-area">
-                                    <canvas id="dualBarChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="container">
+  <div class="header">
+    <input type="text" placeholder="Search Product">
+    <button>Add Product</button>
+  </div>
 
-                    <div class="tab-content" id="content2"></div>
-                    <div class="tab-content" id="content3"></div>
-                    <div class="tab-content" id="content4"></div>
-                    <div class="tab-content" id="content5"></div>
-                    <div class="tab-content" id="content6"></div>
-                    <div class="tab-content" id="content7"></div>
-                    <div class="tab-content" id="content8"></div>
-                    <div class="tab-content" id="content9"></div>
-                    <div class="tab-content" id="content10"></div>
-                </div>
-            </div>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox"></th>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th>SKU</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Air Jordan<br><small>Air Jordan is a line of basketball shoes produced by Nike</small></div></td>
+        <td><span class="category-icon shoes"></span> Shoes</td>
+        <td><span class="stock-toggle"></span></td>
+        <td>31063</td>
+        <td>$125</td>
+        <td>942</td>
+        <td><span class="status Inactive">Inactive</span></td>
+        <td class="actions">
+          <button class="icon-btn">✏️</button>
+          <button class="icon-btn">⋮</button>
+        </td>
+      </tr>
 
-            <div id="help" class="page">
-                <h2>المساعدة</h2>
-                <p>معلومات المساعدة.</p>
-            </div>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Amazon Fire TV<br><small>4K UHD smart TV, stream live TV without cable</small></div></td>
+        <td><span class="category-icon electronics"></span> Electronics</td>
+        <td><span class="stock-toggle"></span></td>
+        <td>5829</td>
+        <td>$263.49</td>
+        <td>587</td>
+        <td><span class="status Scheduled">Scheduled</span></td>
+        <td class="actions">
+          <button class="icon-btn">✏️</button>
+          <button class="icon-btn">⋮</button>
+        </td>
+      </tr>
 
-            <div id="settings" class="page ">
-                <div class="tabs">
-                    <input type="radio" name="tabs" id="tab11">
-                    <input type="radio" name="tabs" id="tab12">
-                    <input type="radio" name="tabs" id="tab13">
-                    <input type="radio" name="tabs" id="tab14">
-                    <input type="radio" name="tabs" id="tab15">
-                    <input type="radio" name="tabs" id="tab16">
-                    
-                    <!-- Tabs Header -->
-                    <div class="tab-header">
-                        <label for="tab11">Profile</label> <!--  / الاسم واللوجو / الفروع-السجل الضريبي وبيانات الفروع / اللغه  -->
-                        <label for="tab12">Employees</label><!-- اعدادات صلاحيه الوصول لكل موظف / اعاده تعين كلمه السر / اضافه وتعديل وحذف موظف -->
-                        <label for="tab13">Accounts</label> <!-- / اعدادات الدفع / العمله / الضريبه / الخدمه-->
-                        <label for="tab14">Theme</label> <!-- اعداد المظهر والتنبيهات-->
-                        <label for="tab15">Security</label> <!-- اعاده تعين كلمه كلمه مرور الحساب الرئيسي / الاطلاع علي سجل النشاطات / نسخ احطياتي والتوصيل علي جوجل درايفونسخ تلقائي لبيانات الشركه-->
-                        <label for="tab16">اعدادات النظام</label> <!--اختياري -->
-                    </div>
-                    
-                    <!-- Tabs Content -->
-                    <div class="tab-content-container">
-                        <div class="tab-content" id="content11">
-                            profile
-                        </div>
-                        <div class="tab-content" id="content12">Empolyees</div>
-                        <div class="tab-content" id="content12">Accounts</div>
-                        <div class="tab-content" id="content14">Theme</div>
-                        <div class="tab-content" id="content15">Security</div>
-                        <div class="tab-content" id="content16">اعدادات النظام</div>
-                    </div>
-                </div>
-            </div>
-                
-            <div id="logout" class="page">
-                <h2>تسجيل الخروج</h2>
-                <p>تم تسجيل الخروج.</p>
-            </div>
-        </div>
-    </div>
-    
-    <script src="Script.js"></script>
-    <script src="Chart.js"></script>
+      <tr>
+        <td><input type="checkbox"></td>
+        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Apple iPad<br><small>10.2-inch Retina Display, 64GB</small></div></td>
+        <td><span class="category-icon electronics"></span> Electronics</td>
+        <td><span class="stock-toggle active"></span></td>
+        <td>35946</td>
+        <td>$248.39</td>
+        <td>468</td>
+        <td><span class="status Publish">Publish</span></td>
+        <td class="actions">
+          <button class="icon-btn">✏️</button>
+          <button class="icon-btn">⋮</button>
+        </td>
+      </tr>
+
+      <!-- باقي الصفوف بنفس الشكل -->
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
