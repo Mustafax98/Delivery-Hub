@@ -378,4 +378,19 @@ canvas {
     .summary {
         flex-direction: column;
     }
+    .controls-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .buttons-group {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .chart-btn {
+        flex: 1 1 30%;
+        min-width: 90px;
+    }
+    .dropdown-select {
+        width: 100%;
+    }
 }
