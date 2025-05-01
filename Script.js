@@ -12,3 +12,24 @@ toggleBtn.addEventListener("click", () => {
         main.style.width = sidebar.classList.contains("hidden") ? "100%" : "95%";
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll(".sidebar a");
+    const pages = document.querySelectorAll(".page");
+  
+    links.forEach(link => {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute("data-target");
+  
+        pages.forEach(page => {
+          page.classList.remove("active");
+        });
+  
+        const targetPage = document.getElementById(targetId);
+        if (targetPage) {
+          targetPage.classList.add("active");
+        }
+      });
+    });
+  });
