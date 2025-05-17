@@ -2,22 +2,22 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>نظام إدارة البيانات الآمن</title>
+  <title>نظام الجدول الآمن</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       direction: rtl;
-      background-color: #f0f2f5;
+      background-color: #f4f4f4;
       padding: 20px;
     }
 
     .container {
       max-width: 1100px;
       margin: auto;
-      background: #fff;
+      background: white;
       padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     h2 {
@@ -27,31 +27,26 @@
     input, button {
       padding: 8px;
       margin: 5px;
-      border-radius: 6px;
       font-size: 16px;
-    }
-
-    input[type="text"], input[type="password"], input[type="date"], input[type="number"] {
+      border-radius: 6px;
       border: 1px solid #ccc;
-      width: 100%;
-      box-sizing: border-box;
     }
 
     button {
-      background-color: #4CAF50;
+      background-color: #28a745;
       color: white;
       border: none;
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #218838;
       cursor: pointer;
     }
 
     table {
       width: 100%;
-      margin-top: 15px;
       border-collapse: collapse;
+      margin-top: 15px;
     }
 
     th, td {
@@ -61,27 +56,13 @@
     }
 
     th {
-      background-color: #eee;
-    }
-
-    .editable[contenteditable="true"] {
-      background-color: #ffffcc;
-    }
-
-    .actions {
-      margin: 10px 0;
-    }
-
-    .hidden-cell {
-      color: #ccc;
-      font-style: italic;
+      background-color: #f8f8f8;
     }
 
     .pass-cell {
       display: flex;
-      gap: 5px;
       justify-content: center;
-      align-items: center;
+      gap: 5px;
     }
 
     .pass-cell input {
@@ -90,140 +71,128 @@
   </style>
 </head>
 <body>
-<div class="container">
-  <h2>نظام إدارة البيانات الآمن</h2>
+  <div class="container">
+    <h2>نظام الجدول الآمن</h2>
+    <div>
+      <input type="text" id="search" placeholder="ابحث بالاسم أو الكود">
+      <button onclick="login()">تسجيل كمدير</button>
+      <button onclick="addRow()" id="addRowBtn" disabled>إضافة صف</button>
+      <button onclick="saveData()" id="saveBtn" disabled>حفظ التعديلات</button>
+    </div>
 
-  <div class="actions">
-    <input type="text" id="search" placeholder="ابحث بالاسم أو الكود">
-    <button onclick="login()">تسجيل كمدير</button>
-    <button onclick="addRow()" id="addRowBtn" disabled>إضافة صف</button>
-    <button onclick="saveData()" id="saveBtn" disabled>حفظ التعديلات</button>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>الكود</th>
+          <th>الاسم</th>
+          <th>التاريخ</th>
+          <th>الرصيد</th>
+          <th>جروث</th>
+          <th>كلمة المرور</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 
-  <table id="dataTable">
-    <thead>
-    <tr>
-      <th>الكود</th>
-      <th>الاسم</th>
-      <th>التاريخ</th>
-      <th>الرصيد</th>
-      <th>جروث</th>
-      <th>كلمة المرور</th>
-    </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+  <script>
+    let isAdmin = false;
+    let data = JSON.parse(localStorage.getItem("data")) || [
+      { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: '1000', growth: '+5%', password: '111' },
+      { code: 'B002', name: 'سارة', date: '2025-05-02', balance: '800', growth: '-2%', password: '222' }
+    ];
 
-<script>
-  let isAdmin = false;
+    function renderTable(filtered = data) {
+      const tbody = document.querySelector('#dataTable tbody');
+      tbody.innerHTML = '';
 
-  const defaultData = [
-    { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: 1000, growth: '+5%', password: '111' },
-    { code: 'B002', name: 'علي', date: '2025-05-03', balance: 750, growth: '-3%', password: '222' }
-  ];
-
-  function getStoredData() {
-    return JSON.parse(localStorage.getItem('data')) || defaultData;
-  }
-
-  function saveToStorage(data) {
-    localStorage.setItem('data', JSON.stringify(data));
-  }
-
-  let data = getStoredData();
-
-  function renderTable(filteredData) {
-    const tbody = document.querySelector('#dataTable tbody');
-    tbody.innerHTML = '';
-
-    filteredData.forEach((row, index) => {
-      const tr = document.createElement('tr');
-      const showSensitive = row._unlocked || isAdmin;
-
-      tr.innerHTML = `
-        <td contenteditable="${isAdmin}" class="editable">${row.code}</td>
-        <td contenteditable="${isAdmin}" class="editable">${row.name}</td>
-        <td contenteditable="${isAdmin}" class="editable">${row.date}</td>
-        <td contenteditable="${isAdmin}" class="editable">
-          ${showSensitive ? row.balance : `<span class="hidden-cell">****</span>`}
-        </td>
-        <td contenteditable="${isAdmin}" class="editable">
-          ${showSensitive ? row.growth : `<span class="hidden-cell">****</span>`}
-        </td>
-        <td class="pass-cell">
-          <input type="password" id="pass-${index}" placeholder="كلمة المرور">
-          <button onclick="unlock(${index})">موافق</button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-  }
-
-  function unlock(index) {
-    const pass = document.getElementById(`pass-${index}`).value;
-    if (pass === data[index].password) {
-      data[index]._unlocked = true;
-      renderTable(data);
-    } else {
-      alert("كلمة المرور غير صحيحة");
-    }
-  }
-
-  function login() {
-    const username = prompt("ادخل اسم المستخدم:");
-    const password = prompt("ادخل كلمة المرور:");
-
-    if (username === 'admin' && password === '1234') {
-      isAdmin = true;
-      document.getElementById('addRowBtn').disabled = false;
-      document.getElementById('saveBtn').disabled = false;
-      renderTable(data);
-    } else {
-      alert("بيانات الدخول غير صحيحة");
-    }
-  }
-
-  function addRow() {
-    data.push({ code: '', name: '', date: '', balance: '', growth: '', password: '', _unlocked: true });
-    renderTable(data);
-  }
-
-  function saveData() {
-    const rows = document.querySelectorAll('#dataTable tbody tr');
-    data = [];
-
-    rows.forEach((tr, index) => {
-      const cells = tr.querySelectorAll('td');
-      const code = cells[0].innerText.trim();
-      const name = cells[1].innerText.trim();
-      const date = cells[2].innerText.trim();
-      const balance = cells[3].innerText.includes('****') ? '' : cells[3].innerText.trim();
-      const growth = cells[4].innerText.includes('****') ? '' : cells[4].innerText.trim();
-      const passwordInput = tr.querySelector(`#pass-${index}`);
-      const password = passwordInput ? passwordInput.value : '';
-
-      data.push({
-        code, name, date, balance, growth,
-        password: password || (data[index]?.password || ''),
-        _unlocked: isAdmin || data[index]?._unlocked
+      filtered.forEach((row, index) => {
+        const showRealData = row._unlocked || isAdmin;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td contenteditable="${isAdmin}">${row.code}</td>
+          <td contenteditable="${isAdmin}">${row.name}</td>
+          <td contenteditable="${isAdmin}">${row.date}</td>
+          <td contenteditable="${isAdmin}">${showRealData ? row.balance : '****'}</td>
+          <td contenteditable="${isAdmin}">${showRealData ? row.growth : '****'}</td>
+          <td class="pass-cell">
+            <input type="password" id="pass-${index}" placeholder="كلمة المرور">
+            <button onclick="unlock(${index})">موافق</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
       });
+    }
+
+    function unlock(index) {
+      const input = document.getElementById(`pass-${index}`);
+      const value = input.value;
+      if (value === data[index].password) {
+        data[index]._unlocked = true;
+        renderTable(data);
+      } else {
+        alert("كلمة المرور غير صحيحة");
+      }
+    }
+
+    function login() {
+      const user = prompt("اسم المستخدم:");
+      const pass = prompt("كلمة المرور:");
+      if (user === 'admin' && pass === '1234') {
+        isAdmin = true;
+        document.getElementById('addRowBtn').disabled = false;
+        document.getElementById('saveBtn').disabled = false;
+        renderTable();
+      } else {
+        alert("بيانات الدخول غير صحيحة");
+      }
+    }
+
+    function addRow() {
+      data.push({
+        code: '',
+        name: '',
+        date: '',
+        balance: '',
+        growth: '',
+        password: '',
+        _unlocked: true
+      });
+      renderTable(data);
+    }
+
+    function saveData() {
+      const rows = document.querySelectorAll('#dataTable tbody tr');
+      const newData = [];
+      rows.forEach((tr, i) => {
+        const tds = tr.querySelectorAll('td');
+        const passInput = tr.querySelector(`#pass-${i}`);
+        const newRow = {
+          code: tds[0].innerText.trim(),
+          name: tds[1].innerText.trim(),
+          date: tds[2].innerText.trim(),
+          balance: tds[3].innerText.trim() === '****' ? data[i]?.balance : tds[3].innerText.trim(),
+          growth: tds[4].innerText.trim() === '****' ? data[i]?.growth : tds[4].innerText.trim(),
+          password: passInput ? passInput.value || data[i]?.password : data[i]?.password,
+          _unlocked: isAdmin || data[i]?._unlocked
+        };
+        newData.push(newRow);
+      });
+      data = newData;
+      localStorage.setItem("data", JSON.stringify(data));
+      alert("تم حفظ البيانات");
+      renderTable();
+    }
+
+    document.getElementById("search").addEventListener("input", function () {
+      const q = this.value.toLowerCase();
+      const filtered = data.filter(
+        row => row.code.toLowerCase().includes(q) || row.name.toLowerCase().includes(q)
+      );
+      renderTable(filtered);
     });
 
-    saveToStorage(data);
-    alert("تم حفظ البيانات");
-  }
-
-  document.getElementById('search').addEventListener('input', function () {
-    const q = this.value.toLowerCase();
-    const filtered = data.filter(row =>
-      row.code.toLowerCase().includes(q) || row.name.toLowerCase().includes(q)
-    );
-    renderTable(filtered);
-  });
-
-  // أول تحميل
-  renderTable(data);
-</script>
+    renderTable();
+  </script>
 </body>
 </html>
