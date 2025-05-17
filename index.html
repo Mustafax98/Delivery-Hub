@@ -7,7 +7,7 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       direction: rtl;
-      background-color: #f4f4f4;
+      background-color: #f9f9f9;
       padding: 20px;
     }
 
@@ -17,7 +17,7 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
 
     h2 {
@@ -43,6 +43,10 @@
       cursor: pointer;
     }
 
+    .danger {
+      background-color: #dc3545 !important;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -56,7 +60,7 @@
     }
 
     th {
-      background-color: #f8f8f8;
+      background-color: #f0f0f0;
     }
 
     .pass-cell {
@@ -76,6 +80,7 @@
     <div>
       <input type="text" id="search" placeholder="ابحث بالاسم أو الكود">
       <button onclick="login()">تسجيل كمدير</button>
+      <button onclick="logout()" id="logoutBtn" class="danger" style="display:none">تسجيل الخروج</button>
       <button onclick="addRow()" id="addRowBtn" disabled>إضافة صف</button>
       <button onclick="saveData()" id="saveBtn" disabled>حفظ التعديلات</button>
     </div>
@@ -108,13 +113,14 @@
 
       filtered.forEach((row, index) => {
         const showRealData = row._unlocked || isAdmin;
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td contenteditable="${isAdmin}">${row.code}</td>
           <td contenteditable="${isAdmin}">${row.name}</td>
           <td contenteditable="${isAdmin}">${row.date}</td>
-          <td contenteditable="${isAdmin}">${showRealData ? row.balance : '****'}</td>
-          <td contenteditable="${isAdmin}">${showRealData ? row.growth : '****'}</td>
+          <td contenteditable="${false}" id="bal-${index}">${showRealData ? row.balance : '****'}</td>
+          <td contenteditable="${false}" id="growth-${index}">${showRealData ? row.growth : '****'}</td>
           <td class="pass-cell">
             <input type="password" id="pass-${index}" placeholder="كلمة المرور">
             <button onclick="unlock(${index})">موافق</button>
@@ -126,10 +132,12 @@
 
     function unlock(index) {
       const input = document.getElementById(`pass-${index}`);
-      const value = input.value;
-      if (value === data[index].password) {
+      const pass = input.value;
+
+      if (pass === data[index].password) {
         data[index]._unlocked = true;
-        renderTable(data);
+        document.getElementById(`bal-${index}`).innerText = data[index].balance;
+        document.getElementById(`growth-${index}`).innerText = data[index].growth;
       } else {
         alert("كلمة المرور غير صحيحة");
       }
@@ -142,10 +150,19 @@
         isAdmin = true;
         document.getElementById('addRowBtn').disabled = false;
         document.getElementById('saveBtn').disabled = false;
+        document.getElementById('logoutBtn').style.display = 'inline-block';
         renderTable();
       } else {
         alert("بيانات الدخول غير صحيحة");
       }
+    }
+
+    function logout() {
+      isAdmin = false;
+      document.getElementById('addRowBtn').disabled = true;
+      document.getElementById('saveBtn').disabled = true;
+      document.getElementById('logoutBtn').style.display = 'none';
+      renderTable();
     }
 
     function addRow() {
@@ -164,6 +181,7 @@
     function saveData() {
       const rows = document.querySelectorAll('#dataTable tbody tr');
       const newData = [];
+
       rows.forEach((tr, i) => {
         const tds = tr.querySelectorAll('td');
         const passInput = tr.querySelector(`#pass-${i}`);
@@ -178,6 +196,7 @@
         };
         newData.push(newRow);
       });
+
       data = newData;
       localStorage.setItem("data", JSON.stringify(data));
       alert("تم حفظ البيانات");
