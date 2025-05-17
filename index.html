@@ -2,219 +2,228 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>لوحة إدارة البيانات</title>
+  <title>نظام إدارة البيانات الآمن</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       direction: rtl;
-      background: #f4f4f9;
-      margin: 0;
+      background-color: #f0f2f5;
       padding: 20px;
     }
 
     .container {
       max-width: 1100px;
       margin: auto;
-      background: white;
+      background: #fff;
+      padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      padding: 20px;
     }
 
     h2 {
       text-align: center;
-      color: #444;
     }
 
-    #loginForm, #mainContent {
-      display: none;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    input, button {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 6px;
       font-size: 16px;
     }
 
-    .input-group label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
+    input[type="text"], input[type="password"], input[type="date"], input[type="number"] {
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button {
-      padding: 10px 20px;
-      background: #4CAF50;
+      background-color: #4CAF50;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
     }
 
     button:hover {
-      background: #45a049;
-    }
-
-    #search {
-      margin: 20px 0;
-      padding: 10px;
-      width: 300px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #aaa;
+      background-color: #45a049;
+      cursor: pointer;
     }
 
     table {
       width: 100%;
+      margin-top: 15px;
       border-collapse: collapse;
-      margin-top: 10px;
     }
 
     th, td {
-      padding: 12px;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
+      padding: 10px;
       text-align: center;
     }
 
     th {
-      background-color: #e3e3e3;
+      background-color: #eee;
     }
 
-    input[type="password"] {
-      width: 100%;
-      padding: 6px;
-      border-radius: 6px;
-      border: 1px solid #aaa;
+    .editable[contenteditable="true"] {
+      background-color: #ffffcc;
+    }
+
+    .actions {
+      margin: 10px 0;
+    }
+
+    .hidden-cell {
+      color: #ccc;
+      font-style: italic;
+    }
+
+    .pass-cell {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pass-cell input {
+      width: 100px;
     }
   </style>
 </head>
 <body>
-
 <div class="container">
-  <h2>لوحة إدارة البيانات</h2>
+  <h2>نظام إدارة البيانات الآمن</h2>
 
-  <!-- نموذج تسجيل الدخول -->
-  <div id="loginForm">
-    <div class="input-group">
-      <label for="username">اسم المستخدم</label>
-      <input type="text" id="username" placeholder="أدخل اسم المستخدم">
-    </div>
-    <div class="input-group">
-      <label for="password">كلمة المرور</label>
-      <input type="password" id="password" placeholder="أدخل كلمة المرور">
-    </div>
-    <button onclick="login()">دخول</button>
+  <div class="actions">
+    <input type="text" id="search" placeholder="ابحث بالاسم أو الكود">
+    <button onclick="login()">تسجيل كمدير</button>
+    <button onclick="addRow()" id="addRowBtn" disabled>إضافة صف</button>
+    <button onclick="saveData()" id="saveBtn" disabled>حفظ التعديلات</button>
   </div>
 
-  <!-- المحتوى الرئيسي -->
-  <div id="mainContent">
-    <input type="text" id="search" placeholder="ابحث بالاسم أو الكود...">
-    <table id="dataTable">
-      <thead>
-        <tr>
-          <th>الكود</th>
-          <th>الاسم</th>
-          <th>التاريخ</th>
-          <th>الرصيد</th>
-          <th>جروث</th>
-          <th class="admin-only">كلمة المرور</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <table id="dataTable">
+    <thead>
+    <tr>
+      <th>الكود</th>
+      <th>الاسم</th>
+      <th>التاريخ</th>
+      <th>الرصيد</th>
+      <th>جروث</th>
+      <th>كلمة المرور</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 
 <script>
-  // بيانات افتراضية
-  const data = [
-    { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: 1000, growth: '+5%', password: '' },
-    { code: 'B002', name: 'علي', date: '2025-05-03', balance: 750, growth: '-3%', password: '' },
-    { code: 'C003', name: 'سارة', date: '2025-05-05', balance: 1200, growth: '+8%', password: '' },
-    { code: 'D004', name: 'ليلى', date: '2025-05-10', balance: 500, growth: '0%', password: '' },
-    { code: 'E005', name: 'محمد', date: '2025-05-12', balance: 950, growth: '+2%', password: '' }
-  ];
-
   let isAdmin = false;
 
-  // عرض فورم الدخول مبدئياً
-  document.getElementById('loginForm').style.display = 'block';
+  const defaultData = [
+    { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: 1000, growth: '+5%', password: '111' },
+    { code: 'B002', name: 'علي', date: '2025-05-03', balance: 750, growth: '-3%', password: '222' }
+  ];
 
-  function login() {
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
-
-    // بيانات تسجيل الدخول الثابتة (يمكن تطويرها لاحقًا)
-    if (user === 'admin' && pass === '1234') {
-      isAdmin = true;
-      showMainContent();
-    } else {
-      alert('بيانات الدخول غير صحيحة');
-    }
+  function getStoredData() {
+    return JSON.parse(localStorage.getItem('data')) || defaultData;
   }
 
-  function showMainContent() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    renderTable(data);
+  function saveToStorage(data) {
+    localStorage.setItem('data', JSON.stringify(data));
   }
 
-  function renderTable(rows) {
+  let data = getStoredData();
+
+  function renderTable(filteredData) {
     const tbody = document.querySelector('#dataTable tbody');
     tbody.innerHTML = '';
 
-    rows.forEach(row => {
+    filteredData.forEach((row, index) => {
       const tr = document.createElement('tr');
+      const showSensitive = row._unlocked || isAdmin;
+
       tr.innerHTML = `
-        <td>${row.code}</td>
-        <td>${row.name}</td>
-        <td>${row.date}</td>
-        <td>${row.balance}</td>
-        <td>${row.growth}</td>
-        <td class="admin-only">
-          ${isAdmin ? `<input type="password" value="${row.password}" data-code="${row.code}" />` : ''}
+        <td contenteditable="${isAdmin}" class="editable">${row.code}</td>
+        <td contenteditable="${isAdmin}" class="editable">${row.name}</td>
+        <td contenteditable="${isAdmin}" class="editable">${row.date}</td>
+        <td contenteditable="${isAdmin}" class="editable">
+          ${showSensitive ? row.balance : `<span class="hidden-cell">****</span>`}
+        </td>
+        <td contenteditable="${isAdmin}" class="editable">
+          ${showSensitive ? row.growth : `<span class="hidden-cell">****</span>`}
+        </td>
+        <td class="pass-cell">
+          <input type="password" id="pass-${index}" placeholder="كلمة المرور">
+          <button onclick="unlock(${index})">موافق</button>
         </td>
       `;
       tbody.appendChild(tr);
     });
-
-    if (isAdmin) attachPasswordListeners();
-    togglePasswordVisibility();
   }
 
-  function togglePasswordVisibility() {
-    const elements = document.querySelectorAll('.admin-only');
-    elements.forEach(el => el.style.display = isAdmin ? 'table-cell' : 'none');
+  function unlock(index) {
+    const pass = document.getElementById(`pass-${index}`).value;
+    if (pass === data[index].password) {
+      data[index]._unlocked = true;
+      renderTable(data);
+    } else {
+      alert("كلمة المرور غير صحيحة");
+    }
   }
 
-  function attachPasswordListeners() {
-    const inputs = document.querySelectorAll('input[type="password"]');
-    inputs.forEach(input => {
-      input.addEventListener('input', e => {
-        const code = e.target.dataset.code;
-        const index = data.findIndex(item => item.code === code);
-        if (index !== -1) data[index].password = e.target.value;
+  function login() {
+    const username = prompt("ادخل اسم المستخدم:");
+    const password = prompt("ادخل كلمة المرور:");
+
+    if (username === 'admin' && password === '1234') {
+      isAdmin = true;
+      document.getElementById('addRowBtn').disabled = false;
+      document.getElementById('saveBtn').disabled = false;
+      renderTable(data);
+    } else {
+      alert("بيانات الدخول غير صحيحة");
+    }
+  }
+
+  function addRow() {
+    data.push({ code: '', name: '', date: '', balance: '', growth: '', password: '', _unlocked: true });
+    renderTable(data);
+  }
+
+  function saveData() {
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+    data = [];
+
+    rows.forEach((tr, index) => {
+      const cells = tr.querySelectorAll('td');
+      const code = cells[0].innerText.trim();
+      const name = cells[1].innerText.trim();
+      const date = cells[2].innerText.trim();
+      const balance = cells[3].innerText.includes('****') ? '' : cells[3].innerText.trim();
+      const growth = cells[4].innerText.includes('****') ? '' : cells[4].innerText.trim();
+      const passwordInput = tr.querySelector(`#pass-${index}`);
+      const password = passwordInput ? passwordInput.value : '';
+
+      data.push({
+        code, name, date, balance, growth,
+        password: password || (data[index]?.password || ''),
+        _unlocked: isAdmin || data[index]?._unlocked
       });
     });
+
+    saveToStorage(data);
+    alert("تم حفظ البيانات");
   }
 
-  // فلترة بحث
-  document.getElementById('search').addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
-    const filtered = data.filter(item =>
-      item.code.toLowerCase().includes(query) ||
-      item.name.toLowerCase().includes(query)
+  document.getElementById('search').addEventListener('input', function () {
+    const q = this.value.toLowerCase();
+    const filtered = data.filter(row =>
+      row.code.toLowerCase().includes(q) || row.name.toLowerCase().includes(q)
     );
     renderTable(filtered);
   });
-</script>
 
+  // أول تحميل
+  renderTable(data);
+</script>
 </body>
 </html>
