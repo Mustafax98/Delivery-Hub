@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <title>نظام الجدول الآمن - نسخة محمية</title>
+  <title>نظام الجدول الآمن - نسخة محسنة</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -103,13 +103,17 @@
     filtered.forEach((row, index) => {
       const unlocked = row._unlocked || isAdmin;
 
+      // في وضع المدير الرصيد والجروث editable، وإلا مخفية (****)
+      const balanceContent = unlocked ? `<div contenteditable="${isAdmin}" id="bal-edit-${index}">${row.balance}</div>` : '****';
+      const growthContent = unlocked ? `<div contenteditable="${isAdmin}" id="growth-edit-${index}">${row.growth}</div>` : '****';
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td contenteditable="${isAdmin}">${row.code}</td>
         <td contenteditable="${isAdmin}">${row.name}</td>
         <td contenteditable="${isAdmin}">${row.date}</td>
-        <td contenteditable="false" id="bal-${index}">${unlocked ? row.balance : '****'}</td>
-        <td contenteditable="false" id="growth-${index}">${unlocked ? row.growth : '****'}</td>
+        <td>${balanceContent}</td>
+        <td>${growthContent}</td>
         <td class="pass-cell">
           <input type="password" id="pass-${index}" placeholder="كلمة المرور" />
           <button onclick="unlock(${index})">موافق</button>
@@ -126,8 +130,7 @@
 
     if (enteredPass === data[index].password) {
       data[index]._unlocked = true;
-      document.getElementById(`bal-${index}`).innerText = data[index].balance;
-      document.getElementById(`growth-${index}`).innerText = data[index].growth;
+      renderTable();
     } else {
       alert('كلمة المرور غير صحيحة');
     }
@@ -154,7 +157,8 @@
     document.getElementById('saveBtn').style.display = 'none';
     document.getElementById('logoutBtn').style.display = 'none';
     document.getElementById('loginBtn').style.display = 'inline-block';
-    // لما تخرج المدير كل الصفوف ترجع تقفل البيانات الحساسة
+
+    // إخفاء كل البيانات الحساسة لما يخرج المدير
     data.forEach(row => row._unlocked = false);
     renderTable();
   }
@@ -180,16 +184,16 @@
       const tds = tr.querySelectorAll('td');
       const passInput = tr.querySelector(`#pass-${i}`);
 
-      // إحنا مانسمحش تعديل بيانات الرصيد والجروث إلا للمدير، لكن محتاجين نحافظ على القيمة لو مش معدّلين
-      const balanceText = tds[3].innerText.trim();
-      const growthText = tds[4].innerText.trim();
+      // نقرأ القيم من العناصر القابلة للتعديل أو من النص المخفي
+      const balanceDiv = document.getElementById(`bal-edit-${i}`);
+      const growthDiv = document.getElementById(`growth-edit-${i}`);
 
       newData.push({
         code: tds[0].innerText.trim(),
         name: tds[1].innerText.trim(),
         date: tds[2].innerText.trim(),
-        balance: (balanceText === '****') ? data[i].balance : balanceText,
-        growth: (growthText === '****') ? data[i].growth : growthText,
+        balance: balanceDiv ? balanceDiv.innerText.trim() : data[i].balance,
+        growth: growthDiv ? growthDiv.innerText.trim() : data[i].growth,
         password: passInput ? passInput.value.trim() || data[i].password : data[i].password,
         _unlocked: isAdmin || data[i]._unlocked
       });
