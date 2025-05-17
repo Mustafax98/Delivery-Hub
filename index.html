@@ -1,54 +1,139 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8" />
-<title>جدول بيانات مع بحث وباسورد</title>
-<style>
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    direction: rtl;
-    font-family: Arial, sans-serif;
-  }
-  th, td {
-    border: 1px solid #333;
-    padding: 8px;
-    text-align: center;
-  }
-  input[type="password"] {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  #search {
-    margin-bottom: 10px;
-    width: 300px;
-    padding: 6px;
-    font-size: 16px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>لوحة إدارة البيانات</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      direction: rtl;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #444;
+    }
+
+    #loginForm, #mainContent {
+      display: none;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #search {
+      margin: 20px 0;
+      padding: 10px;
+      width: 300px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #e3e3e3;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+  </style>
 </head>
 <body>
 
-<input type="text" id="search" placeholder="ابحث بالاسم أو الكود..." />
+<div class="container">
+  <h2>لوحة إدارة البيانات</h2>
 
-<table id="dataTable">
-  <thead>
-    <tr>
-      <th>الكود</th>
-      <th>الاسم</th>
-      <th>التاريخ</th>
-      <th>الرصيد</th>
-      <th>جروث (ربح/خسارة)</th>
-      <th>كلمة المرور</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- البيانات هنا -->
-  </tbody>
-</table>
+  <!-- نموذج تسجيل الدخول -->
+  <div id="loginForm">
+    <div class="input-group">
+      <label for="username">اسم المستخدم</label>
+      <input type="text" id="username" placeholder="أدخل اسم المستخدم">
+    </div>
+    <div class="input-group">
+      <label for="password">كلمة المرور</label>
+      <input type="password" id="password" placeholder="أدخل كلمة المرور">
+    </div>
+    <button onclick="login()">دخول</button>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div id="mainContent">
+    <input type="text" id="search" placeholder="ابحث بالاسم أو الكود...">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>الكود</th>
+          <th>الاسم</th>
+          <th>التاريخ</th>
+          <th>الرصيد</th>
+          <th>جروث</th>
+          <th class="admin-only">كلمة المرور</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
 
 <script>
-  // بيانات افتراضية مع باسورد مرتبط بالكود
+  // بيانات افتراضية
   const data = [
     { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: 1000, growth: '+5%', password: '' },
     { code: 'B002', name: 'علي', date: '2025-05-03', balance: 750, growth: '-3%', password: '' },
@@ -57,62 +142,78 @@
     { code: 'E005', name: 'محمد', date: '2025-05-12', balance: 950, growth: '+2%', password: '' }
   ];
 
-  const tbody = document.querySelector('#dataTable tbody');
-  const searchInput = document.getElementById('search');
+  let isAdmin = false;
 
-  // دالة لرسم الجدول
-  function renderTable(filteredData) {
+  // عرض فورم الدخول مبدئياً
+  document.getElementById('loginForm').style.display = 'block';
+
+  function login() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    // بيانات تسجيل الدخول الثابتة (يمكن تطويرها لاحقًا)
+    if (user === 'admin' && pass === '1234') {
+      isAdmin = true;
+      showMainContent();
+    } else {
+      alert('بيانات الدخول غير صحيحة');
+    }
+  }
+
+  function showMainContent() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    renderTable(data);
+  }
+
+  function renderTable(rows) {
+    const tbody = document.querySelector('#dataTable tbody');
     tbody.innerHTML = '';
-    filteredData.forEach(row => {
-      const tr = document.createElement('tr');
 
+    rows.forEach(row => {
+      const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${row.code}</td>
         <td>${row.name}</td>
         <td>${row.date}</td>
         <td>${row.balance}</td>
         <td>${row.growth}</td>
-        <td><input type="password" placeholder="أدخل كلمة المرور" data-code="${row.code}" value="${row.password}" /></td>
+        <td class="admin-only">
+          ${isAdmin ? `<input type="password" value="${row.password}" data-code="${row.code}" />` : ''}
+        </td>
       `;
-
       tbody.appendChild(tr);
     });
-    attachPasswordListeners();
+
+    if (isAdmin) attachPasswordListeners();
+    togglePasswordVisibility();
   }
 
-  // ربط تغيير الباسورد بالكود
+  function togglePasswordVisibility() {
+    const elements = document.querySelectorAll('.admin-only');
+    elements.forEach(el => el.style.display = isAdmin ? 'table-cell' : 'none');
+  }
+
   function attachPasswordListeners() {
-    const passwordInputs = document.querySelectorAll('input[type="password"]');
-    passwordInputs.forEach(input => {
-      input.addEventListener('input', (e) => {
-        const code = e.target.getAttribute('data-code');
-        const newPass = e.target.value;
-        // تحديث الباسورد في الداتا بناء على الكود
+    const inputs = document.querySelectorAll('input[type="password"]');
+    inputs.forEach(input => {
+      input.addEventListener('input', e => {
+        const code = e.target.dataset.code;
         const index = data.findIndex(item => item.code === code);
-        if (index !== -1) {
-          data[index].password = newPass;
-        }
+        if (index !== -1) data[index].password = e.target.value;
       });
     });
   }
 
-  // فلترة البيانات حسب البحث
-  function filterData(query) {
-    query = query.trim().toLowerCase();
-    if (!query) return data;
-    return data.filter(item => 
-      item.code.toLowerCase().includes(query) || 
+  // فلترة بحث
+  document.getElementById('search').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const filtered = data.filter(item =>
+      item.code.toLowerCase().includes(query) ||
       item.name.toLowerCase().includes(query)
     );
-  }
-
-  searchInput.addEventListener('input', () => {
-    const filtered = filterData(searchInput.value);
     renderTable(filtered);
   });
-
-  // رسم الجدول لأول مرة
-  renderTable(data);
 </script>
 
 </body>
