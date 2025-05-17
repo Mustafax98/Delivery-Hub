@@ -1,200 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>Product List</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .header input {
-      padding: 8px 12px;
-      width: 200px;
-    }
-
-    .header button {
-      padding: 10px 20px;
-      background-color: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background-color: #f1f5f9;
-    }
-
-    .status {
-      padding: 4px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .Inactive {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .Scheduled {
-      background-color: #fef9c3;
-      color: #a16207;
-    }
-
-    .Publish {
-      background-color: #d1fae5;
-      color: #047857;
-    }
-
-    .stock-toggle {
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      border-radius: 50%;
-      background-color: #d1d5db;
-    }
-
-    .stock-toggle.active {
-      background-color: #6366f1;
-    }
-
-    .product-info {
-      display: flex;
-      align-items: center;
-    }
-
-    .product-info img {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-      border-radius: 4px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .category-icon {
-      width: 20px;
-      height: 20px;
-      display: inline-block;
-      border-radius: 50%;
-    }
-
-    .shoes { background: #a7f3d0; }
-    .electronics { background: #fecaca; }
-    .accessories { background: #e0e7ff; }
-  </style>
+<meta charset="UTF-8" />
+<title>جدول بيانات مع بحث وباسورد</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    direction: rtl;
+    font-family: Arial, sans-serif;
+  }
+  th, td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: center;
+  }
+  input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #search {
+    margin-bottom: 10px;
+    width: 300px;
+    padding: 6px;
+    font-size: 16px;
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <input type="text" placeholder="Search Product">
-    <button>Add Product</button>
-  </div>
+<input type="text" id="search" placeholder="ابحث بالاسم أو الكود..." />
 
-  <table>
-    <thead>
-      <tr>
-        <th><input type="checkbox"></th>
-        <th>Product</th>
-        <th>Category</th>
-        <th>Stock</th>
-        <th>SKU</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="checkbox"></td>
-        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Air Jordan<br><small>Air Jordan is a line of basketball shoes produced by Nike</small></div></td>
-        <td><span class="category-icon shoes"></span> Shoes</td>
-        <td><span class="stock-toggle"></span></td>
-        <td>31063</td>
-        <td>$125</td>
-        <td>942</td>
-        <td><span class="status Inactive">Inactive</span></td>
-        <td class="actions">
-          <button class="icon-btn">✏️</button>
-          <button class="icon-btn">⋮</button>
-        </td>
-      </tr>
+<table id="dataTable">
+  <thead>
+    <tr>
+      <th>الكود</th>
+      <th>الاسم</th>
+      <th>التاريخ</th>
+      <th>الرصيد</th>
+      <th>جروث (ربح/خسارة)</th>
+      <th>كلمة المرور</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- البيانات هنا -->
+  </tbody>
+</table>
 
-      <tr>
-        <td><input type="checkbox"></td>
-        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Amazon Fire TV<br><small>4K UHD smart TV, stream live TV without cable</small></div></td>
-        <td><span class="category-icon electronics"></span> Electronics</td>
-        <td><span class="stock-toggle"></span></td>
-        <td>5829</td>
-        <td>$263.49</td>
-        <td>587</td>
-        <td><span class="status Scheduled">Scheduled</span></td>
-        <td class="actions">
-          <button class="icon-btn">✏️</button>
-          <button class="icon-btn">⋮</button>
-        </td>
-      </tr>
+<script>
+  // بيانات افتراضية مع باسورد مرتبط بالكود
+  const data = [
+    { code: 'A001', name: 'مصطفى', date: '2025-05-01', balance: 1000, growth: '+5%', password: '' },
+    { code: 'B002', name: 'علي', date: '2025-05-03', balance: 750, growth: '-3%', password: '' },
+    { code: 'C003', name: 'سارة', date: '2025-05-05', balance: 1200, growth: '+8%', password: '' },
+    { code: 'D004', name: 'ليلى', date: '2025-05-10', balance: 500, growth: '0%', password: '' },
+    { code: 'E005', name: 'محمد', date: '2025-05-12', balance: 950, growth: '+2%', password: '' }
+  ];
 
-      <tr>
-        <td><input type="checkbox"></td>
-        <td class="product-info"><img src="https://via.placeholder.com/40" alt=""><div>Apple iPad<br><small>10.2-inch Retina Display, 64GB</small></div></td>
-        <td><span class="category-icon electronics"></span> Electronics</td>
-        <td><span class="stock-toggle active"></span></td>
-        <td>35946</td>
-        <td>$248.39</td>
-        <td>468</td>
-        <td><span class="status Publish">Publish</span></td>
-        <td class="actions">
-          <button class="icon-btn">✏️</button>
-          <button class="icon-btn">⋮</button>
-        </td>
-      </tr>
+  const tbody = document.querySelector('#dataTable tbody');
+  const searchInput = document.getElementById('search');
 
-      <!-- باقي الصفوف بنفس الشكل -->
-    </tbody>
-  </table>
-</div>
+  // دالة لرسم الجدول
+  function renderTable(filteredData) {
+    tbody.innerHTML = '';
+    filteredData.forEach(row => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td>${row.code}</td>
+        <td>${row.name}</td>
+        <td>${row.date}</td>
+        <td>${row.balance}</td>
+        <td>${row.growth}</td>
+        <td><input type="password" placeholder="أدخل كلمة المرور" data-code="${row.code}" value="${row.password}" /></td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+    attachPasswordListeners();
+  }
+
+  // ربط تغيير الباسورد بالكود
+  function attachPasswordListeners() {
+    const passwordInputs = document.querySelectorAll('input[type="password"]');
+    passwordInputs.forEach(input => {
+      input.addEventListener('input', (e) => {
+        const code = e.target.getAttribute('data-code');
+        const newPass = e.target.value;
+        // تحديث الباسورد في الداتا بناء على الكود
+        const index = data.findIndex(item => item.code === code);
+        if (index !== -1) {
+          data[index].password = newPass;
+        }
+      });
+    });
+  }
+
+  // فلترة البيانات حسب البحث
+  function filterData(query) {
+    query = query.trim().toLowerCase();
+    if (!query) return data;
+    return data.filter(item => 
+      item.code.toLowerCase().includes(query) || 
+      item.name.toLowerCase().includes(query)
+    );
+  }
+
+  searchInput.addEventListener('input', () => {
+    const filtered = filterData(searchInput.value);
+    renderTable(filtered);
+  });
+
+  // رسم الجدول لأول مرة
+  renderTable(data);
+</script>
 
 </body>
 </html>
