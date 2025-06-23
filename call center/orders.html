@@ -1,0 +1,63 @@
+<!-- orders.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام الطلبات</title>
+  <link rel="stylesheet" href="/Pages/CSS/call center.css">
+</head>
+<body>
+  <header><h1>إدارة الطلبات</h1></header>
+  <nav>
+    <ul>
+      <li><a href="/Pages/call center/dashboard.html">لوحة التحكم</a></li>
+      <li><a href="/Pages/call center/ivr.html">الرد التلقائي</a></li>
+      <li><a href="/Pages/call center/calls.html">المكالمات</a></li>
+      <li><a href="/Pages/call center/crm.html">العملاء</a></li>
+      <li><a href="/Pages/call center/orders.html">الطلبات</a></li>
+      <li><a href="/Pages/call center/branches.html">الفروع</a></li>
+      <li><a href="/Pages/call center/reports.html">التقارير</a></li>
+      <li><a href="/Pages/call center/complaints.html">الشكاوى</a></li>
+      <li><a href="/Pages/call center/notifications.html">الإشعارات</a></li>
+      <li><a href="/Pages/call center/recordings.html">تسجيل المكالمات</a></li>
+      <li><a href="/Pages/call center/integration.html">التكامل</a></li>
+      <li><a href="/Pages/call center/users.html">المستخدمين</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="filter-bar">
+      <select>
+        <option>كل الحالات</option>
+        <option>جديد</option>
+        <option>قيد التحضير</option>
+        <option>تم التوصيل</option>
+        <option>ملغي</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>رقم الطلب</th>
+          <th>العميل</th>
+          <th>الفرع</th>
+          <th>القيمة</th>
+          <th>الحالة</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#1056</td>
+          <td>نهى حسن</td>
+          <td>فرع مدينة نصر</td>
+          <td>320 جنيه</td>
+          <td>جديد</td>
+          <td>2025-06-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

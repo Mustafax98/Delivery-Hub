@@ -1,0 +1,64 @@
+<!-- calls.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>إدارة المكالمات</title>
+  <link rel="stylesheet" href="/Pages/CSS/call center.css">
+</head>
+<body>
+  <header><h1>سجل المكالمات</h1></header>
+  <nav>
+    <ul>
+      <li><a href="/Pages/call center/dashboard.html">لوحة التحكم</a></li>
+      <li><a href="/Pages/call center/ivr.html">الرد التلقائي</a></li>
+      <li><a href="/Pages/call center/calls.html">المكالمات</a></li>
+      <li><a href="/Pages/call center/crm.html">العملاء</a></li>
+      <li><a href="/Pages/call center/orders.html">الطلبات</a></li>
+      <li><a href="/Pages/call center/branches.html">الفروع</a></li>
+      <li><a href="/Pages/call center/reports.html">التقارير</a></li>
+      <li><a href="/Pages/call center/complaints.html">الشكاوى</a></li>
+      <li><a href="/Pages/call center/notifications.html">الإشعارات</a></li>
+      <li><a href="/Pages/call center/recordings.html">تسجيل المكالمات</a></li>
+      <li><a href="/Pages/call center/integration.html">التكامل</a></li>
+      <li><a href="/Pages/call center/users.html">المستخدمين</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="filter-bar">
+      <input type="text" placeholder="بحث بالاسم أو الرقم..." />
+      <select>
+        <option>الكل</option>
+        <option>تم الرد</option>
+        <option>فائتة</option>
+        <option>جارية</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>الرقم</th>
+          <th>الفرع</th>
+          <th>الحالة</th>
+          <th>المدة</th>
+          <th>الوقت</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>محمد عبدالعزيز</td>
+          <td>01000000000</td>
+          <td>فرع المهندسين</td>
+          <td>تم الرد</td>
+          <td>2:35</td>
+          <td>11:23 صباحاً</td>
+        </tr>
+        <!-- باقي المكالمات -->
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

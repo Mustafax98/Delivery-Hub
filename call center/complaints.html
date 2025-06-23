@@ -1,0 +1,62 @@
+<!-- complaints.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة الشكاوى</title>
+  <link rel="stylesheet" href="/Pages/CSS/call center.css">
+</head>
+<body>
+  <header><h1>الشكاوى والملاحظات</h1></header>
+  <nav>
+    <ul>
+      <li><a href="/Pages/call center/dashboard.html">لوحة التحكم</a></li>
+      <li><a href="/Pages/call center/ivr.html">الرد التلقائي</a></li>
+      <li><a href="/Pages/call center/calls.html">المكالمات</a></li>
+      <li><a href="/Pages/call center/crm.html">العملاء</a></li>
+      <li><a href="/Pages/call center/orders.html">الطلبات</a></li>
+      <li><a href="/Pages/call center/branches.html">الفروع</a></li>
+      <li><a href="/Pages/call center/reports.html">التقارير</a></li>
+      <li><a href="/Pages/call center/complaints.html">الشكاوى</a></li>
+      <li><a href="/Pages/call center/notifications.html">الإشعارات</a></li>
+      <li><a href="/Pages/call center/recordings.html">تسجيل المكالمات</a></li>
+      <li><a href="/Pages/call center/integration.html">التكامل</a></li>
+      <li><a href="/Pages/call center/users.html">المستخدمين</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <form class="form-box">
+      <label>اسم العميل:</label>
+      <input type="text" placeholder="مثال: أحمد سعيد">
+
+      <label>رقم الهاتف:</label>
+      <input type="text" placeholder="مثال: 01000000000">
+
+      <label>تفاصيل الشكوى:</label>
+      <textarea rows="4" placeholder="نص الشكوى..."></textarea>
+
+      <button type="submit">تسجيل شكوى</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>العميل</th>
+          <th>الهاتف</th>
+          <th>الشكوى</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>أحمد سعيد</td>
+          <td>01000000000</td>
+          <td>تأخير في التوصيل</td>
+          <td>2025-06-23</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

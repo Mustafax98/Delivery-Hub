@@ -1,0 +1,77 @@
+<!-- users.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إدارة المستخدمين</title>
+  <link rel="stylesheet" href="/Pages/CSS/call center.css">
+</head>
+<body>
+  <header><h1>إدارة المستخدمين والصلاحيات</h1></header>
+  <nav>
+    <ul>
+      <li><a href="/Pages/call center/dashboard.html">لوحة التحكم</a></li>
+      <li><a href="/Pages/call center/ivr.html">الرد التلقائي</a></li>
+      <li><a href="/Pages/call center/calls.html">المكالمات</a></li>
+      <li><a href="/Pages/call center/crm.html">العملاء</a></li>
+      <li><a href="/Pages/call center/orders.html">الطلبات</a></li>
+      <li><a href="/Pages/call center/branches.html">الفروع</a></li>
+      <li><a href="/Pages/call center/reports.html">التقارير</a></li>
+      <li><a href="/Pages/call center/complaints.html">الشكاوى</a></li>
+      <li><a href="/Pages/call center/notifications.html">الإشعارات</a></li>
+      <li><a href="/Pages/call center/recordings.html">تسجيل المكالمات</a></li>
+      <li><a href="/Pages/call center/integration.html">التكامل</a></li>
+      <li><a href="/Pages/call center/users.html">المستخدمين</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <form class="form-box">
+      <label>اسم المستخدم:</label>
+      <input type="text" placeholder="اسم المستخدم الكامل">
+
+      <label>اسم الدخول:</label>
+      <input type="text" placeholder="username">
+
+      <label>كلمة المرور:</label>
+      <input type="password">
+
+      <label>الفرع:</label>
+      <select>
+        <option>فرع المعادي</option>
+        <option>فرع أكتوبر</option>
+      </select>
+
+      <label>الصلاحية:</label>
+      <select>
+        <option>مدير</option>
+        <option>موظف كول سنتر</option>
+        <option>مشرف</option>
+      </select>
+
+      <button type="submit">إضافة المستخدم</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>اسم الدخول</th>
+          <th>الفرع</th>
+          <th>الصلاحية</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>محمد أنور</td>
+          <td>manwar</td>
+          <td>المعادي</td>
+          <td>مدير</td>
+          <td><button>🗑️</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>

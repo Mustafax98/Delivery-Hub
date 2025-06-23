@@ -1,0 +1,51 @@
+<!-- ivr.html -->
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>نظام الرد التلقائي IVR</title>
+  <link rel="stylesheet" href="/Pages/CSS/call center.css">
+</head>
+<body>
+  <header><h1>إعدادات الرد التلقائي IVR</h1></header>
+  <nav>
+    <ul>
+      <li><a href="/Pages/call center/dashboard.html">لوحة التحكم</a></li>
+      <li><a href="/Pages/call center/ivr.html">الرد التلقائي</a></li>
+      <li><a href="/Pages/call center/calls.html">المكالمات</a></li>
+      <li><a href="/Pages/call center/crm.html">العملاء</a></li>
+      <li><a href="/Pages/call center/orders.html">الطلبات</a></li>
+      <li><a href="/Pages/call center/branches.html">الفروع</a></li>
+      <li><a href="/Pages/call center/reports.html">التقارير</a></li>
+      <li><a href="/Pages/call center/complaints.html">الشكاوى</a></li>
+      <li><a href="/Pages/call center/notifications.html">الإشعارات</a></li>
+      <li><a href="/Pages/call center/recordings.html">تسجيل المكالمات</a></li>
+      <li><a href="/Pages/call center/integration.html">التكامل</a></li>
+      <li><a href="/Pages/call center/users.html">المستخدمين</a></li>
+    </ul>
+  </nav>
+  <main>
+    <form class="form-box">
+      <label>اسم السيناريو:</label>
+      <input type="text" placeholder="مثال: القائمة الرئيسية">
+
+      <label>التسجيل الصوتي:</label>
+      <input type="file" accept="audio/*">
+
+      <label>خيارات القائمة:</label>
+      <div class="ivr-option">
+        <input type="number" placeholder="رقم الخيار (مثال: 1)" />
+        <input type="text" placeholder="الوصف (مثال: للحجوزات)" />
+        <select>
+          <option>تحويل لموظف</option>
+          <option>تشغيل تسجيل صوتي</option>
+          <option>إنهاء المكالمة</option>
+        </select>
+      </div>
+      <button type="button">إضافة خيار</button>
+      <br /><br />
+      <button type="submit">حفظ الإعدادات</button>
+    </form>
+  </main>
+</body>
+</html>
